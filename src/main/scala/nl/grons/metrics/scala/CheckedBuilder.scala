@@ -39,7 +39,7 @@ trait CheckedBuilder extends BaseBuilder {
    *   val healthCheckRegistry = new com.codahale.metrics.health.HealthCheckRegistry()
    * }
    * trait Checked extends CheckedBuilder {
-   *   val healthCheckRegistry = Application.healthCheckRegistry
+   *   val registry = Application.healthCheckRegistry
    * }
    *
    * class Example(db: Database) extends Checked {

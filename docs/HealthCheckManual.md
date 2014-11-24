@@ -9,10 +9,10 @@ Metrics-healthchecks requires health checks to be registered in an application w
 ```scala
 object YourApplication {
   /** The application wide health check registry. */
-  val healthChecksRegistry = new com.codahale.metrics.health.HealthCheckRegistry();
+  val healthCheckRegistry = new com.codahale.metrics.health.HealthCheckRegistry();
 }
 trait Checked extends nl.grons.metrics.scala.CheckedBuilder {
-  val healthCheckRegistry = Application.healthCheckRegistry
+  val registry = Application.healthCheckRegistry
 }
 ```
 
@@ -89,7 +89,7 @@ class Example extends Checked {
 
 ## About `Checked` and `Instrumented`
 
-Although all Metrics-scala documentation refers to the `Checked` trait (as created in the text above), you are free to chose the name, or in fact not to use it at all. It is also possible to directly extend `CheckedBuilder` and provide an implementation of `healthCheckRegistry` in every class.
+Although all Metrics-scala documentation refers to the `Checked` trait (as created in the text above), you are free to chose the name, or in fact not to use it at all. It is also possible to directly extend `CheckedBuilder` and provide an implementation of `registry` in every class.
 
 There is also opportunity to combine your `Instrumented` and `Checked` in a single trait:
 
@@ -106,7 +106,7 @@ object YourApplication {
 trait Instrumented extends InstrumentedBuilder with CheckedBuilder {
   override lazy val metricBaseName = MetricName(getClass) // Required with 3.1.0, optional since 3.1.1.
   val metricRegistry = YourApplication.metricRegistry
-  val healthCheckRegistry = YourApplication.healthCheckRegistry
+  val registry = YourApplication.healthCheckRegistry
 }
 ```
 
